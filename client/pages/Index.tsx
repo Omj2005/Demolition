@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
+import { SEO, PAGE_SEO } from "@/components/SEO";
 import { Link } from "react-router-dom";
 import {
   BookOpen,
@@ -70,6 +71,7 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO {...PAGE_SEO.home} />
       <Header />
 
       {/* Auth Section */}

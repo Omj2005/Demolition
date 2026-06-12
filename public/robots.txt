@@ -1,3 +1,7 @@
+# Robots.txt for Ravya Management System
+# https://www.robotstxt.org/robotstxt.html
+
+# Allow all major search engines
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +14,16 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# Default rule for all bots
 User-agent: *
 Allow: /
+
+# Disallow admin or API endpoints
+Disallow: /api/
+Disallow: /server/
+
+# Sitemap location
+Sitemap: https://ravya.edu/sitemap.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1

@@ -3,6 +3,7 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { Card } from "@/components/Card";
 import { RecentActivity } from "@/components/RecentActivity";
 import { TodoFlowchart } from "@/components/TodoFlowchart";
+import { SEO, PAGE_SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/UserContext";
 import { useActivity } from "@/context/ActivityContext";
@@ -179,40 +180,42 @@ export default function StudentDashboard() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO {...PAGE_SEO.studentDashboard} />
       <DashboardHeader />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Featured Course Banner */}
-        <Card variant="gradient" className="p-8 md:p-12 text-white space-y-4">
-          <div className="space-y-2">
-            <p className="text-sm font-light opacity-90">
+      {/* Mobile First: Responsive spacing and padding */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 space-y-4 sm:space-y-6 md:space-y-8">
+        {/* Featured Course Banner - Mobile First */}
+        <Card variant="gradient" className="p-4 sm:p-6 md:p-8 lg:p-12 text-white space-y-3 sm:space-y-4">
+          <div className="space-y-1 sm:space-y-2">
+            <p className="text-xs sm:text-sm font-light opacity-90">
               {user.school && user.place ? `${user.school}, ${user.place}` : user.school || "Your School"}
             </p>
-            <p className="text-sm font-light opacity-90">Class {user.class} - Section {user.section}</p>
-            <h2 className="text-3xl md:text-4xl font-bold">Welcome back, {user.name}!</h2>
+            <p className="text-xs sm:text-sm font-light opacity-90">Class {user.class} - Section {user.section}</p>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">Welcome back, {user.name}!</h2>
           </div>
           <div className="h-0.5 bg-white/30 w-full" />
-          <p className="text-sm font-light opacity-90">
+          <p className="text-xs sm:text-sm font-light opacity-90">
             Check your timetable and today's quiz below
           </p>
         </Card>
 
-        {/* My Courses Section */}
-        <section className="space-y-4">
+        {/* My Courses Section - Mobile First */}
+        <section className="space-y-3 sm:space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-bold">My Courses</h3>
+            <h3 className="text-xl sm:text-2xl font-bold">My Courses</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
             {courses.map((course) => (
               <Card
                 key={course.id}
-                className="p-8 flex flex-col items-center gap-4 text-center hover:shadow-lg transition-shadow cursor-pointer"
+                className="p-4 sm:p-6 md:p-8 flex flex-col items-center gap-2 sm:gap-3 md:gap-4 text-center hover:shadow-lg active:shadow-xl transition-shadow cursor-pointer touch-manipulation"
               >
-                <div className="text-5xl">{course.icon}</div>
+                <div className="text-3xl sm:text-4xl md:text-5xl">{course.icon}</div>
                 <div>
-                  <h4 className="text-xl font-semibold">{course.name}</h4>
-                  <p className="text-sm text-muted-foreground font-light">
+                  <h4 className="text-sm sm:text-base md:text-xl font-semibold">{course.name}</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground font-light">
                     {course.lessons} Lessons
                   </p>
                 </div>
@@ -221,35 +224,35 @@ export default function StudentDashboard() {
           </div>
         </section>
 
-        {/* Today's Quiz */}
+        {/* Today's Quiz - Mobile First */}
         {isLoading ? (
-          <section className="space-y-4">
-            <h3 className="text-2xl font-bold">Today's Quiz</h3>
-            <Card className="p-12">
-              <div className="flex flex-col items-center justify-center gap-4 text-muted-foreground">
-                <Loader className="h-8 w-8 animate-spin" />
-                <p className="font-light">Loading today's quiz...</p>
+          <section className="space-y-3 sm:space-y-4">
+            <h3 className="text-xl sm:text-2xl font-bold">Today's Quiz</h3>
+            <Card className="p-6 sm:p-8 md:p-12">
+              <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 text-muted-foreground">
+                <Loader className="h-6 w-6 sm:h-8 sm:w-8 animate-spin" />
+                <p className="font-light text-sm sm:text-base">Loading today's quiz...</p>
               </div>
             </Card>
           </section>
         ) : todayQuiz ? (
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-2xl font-bold">Today's Quiz</h3>
+          <section className="space-y-3 sm:space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+              <h3 className="text-xl sm:text-2xl font-bold">Today's Quiz</h3>
               <Link to="/student-quiz">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto touch-manipulation min-h-[44px] sm:min-h-0">
                   View All Quizzes
                 </Button>
               </Link>
             </div>
 
-            <Card className="p-8 space-y-6 border-2 border-primary/20 bg-primary/5">
-              <div className="space-y-2">
-                <h4 className="text-xl font-semibold">{todayQuiz.title}</h4>
-                <p className="text-muted-foreground font-light">{todayQuiz.question}</p>
+            <Card className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 border-2 border-primary/20 bg-primary/5">
+              <div className="space-y-1 sm:space-y-2">
+                <h4 className="text-lg sm:text-xl font-semibold">{todayQuiz.title}</h4>
+                <p className="text-sm sm:text-base text-muted-foreground font-light">{todayQuiz.question}</p>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {["A", "B", "C", "D"].map((option) => {
                   const isSelected = selectedAnswer === option;
                   const showCorrect = quizSubmitted && option === todayQuiz.correctAnswer;
@@ -259,19 +262,19 @@ export default function StudentDashboard() {
                     <div
                       key={option}
                       onClick={() => !quizSubmitted && setSelectedAnswer(option)}
-                      className={`p-4 rounded-lg border transition-all ${quizSubmitted
+                      className={`p-3 sm:p-4 rounded-lg border transition-all touch-manipulation min-h-[56px] sm:min-h-0 ${quizSubmitted
                         ? showCorrect
                           ? "border-green-500 bg-green-500/10"
                           : showIncorrect
                             ? "border-red-500 bg-red-500/10"
                             : "border-border"
                         : isSelected
-                          ? "border-primary bg-primary/10 cursor-pointer"
-                          : "border-border hover:border-primary/50 hover:bg-primary/5 cursor-pointer"
+                          ? "border-primary bg-primary/10 cursor-pointer active:bg-primary/20"
+                          : "border-border hover:border-primary/50 active:border-primary hover:bg-primary/5 active:bg-primary/10 cursor-pointer"
                         }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center ${quizSubmitted
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <div className={`flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center ${quizSubmitted
                           ? showCorrect
                             ? "border-green-500 bg-green-500"
                             : showIncorrect
@@ -285,8 +288,8 @@ export default function StudentDashboard() {
                           {showCorrect && <span className="text-white text-xs">✓</span>}
                           {showIncorrect && <span className="text-white text-xs">✗</span>}
                         </div>
-                        <p className="font-medium flex-1">
-                          Option {option}: {todayQuiz.options[option as keyof typeof todayQuiz.options]}
+                        <p className="font-medium flex-1 text-sm sm:text-base">
+                          <span className="font-semibold">{option}:</span> {todayQuiz.options[option as keyof typeof todayQuiz.options]}
                         </p>
                       </div>
                     </div>
@@ -298,7 +301,7 @@ export default function StudentDashboard() {
                 <Button
                   variant="gradient"
                   size="lg"
-                  className="w-full"
+                  className="w-full touch-manipulation min-h-[50px] sm:min-h-[44px] text-base"
                   onClick={handleQuizSubmit}
                   disabled={!selectedAnswer || isSubmittingQuiz}
                 >
@@ -312,8 +315,8 @@ export default function StudentDashboard() {
                   )}
                 </Button>
               ) : (
-                <div className="p-4 bg-muted/50 rounded-lg text-center">
-                  <p className="font-medium">
+                <div className="p-3 sm:p-4 bg-muted/50 rounded-lg text-center">
+                  <p className="font-medium text-sm sm:text-base">
                     {selectedAnswer === todayQuiz.correctAnswer
                       ? "🎉 Excellent! You got it right!"
                       : `The correct answer was Option ${todayQuiz.correctAnswer}`}
@@ -323,26 +326,26 @@ export default function StudentDashboard() {
             </Card>
           </section>
         ) : (
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-2xl font-bold">Quizzes</h3>
+          <section className="space-y-3 sm:space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+              <h3 className="text-xl sm:text-2xl font-bold">Quizzes</h3>
               <Link to="/student-quiz">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="w-full sm:w-auto touch-manipulation min-h-[44px] sm:min-h-0">
                   View All Quizzes
                 </Button>
               </Link>
             </div>
 
-            <Card className="p-8 text-center space-y-4 bg-muted/20 border-dashed">
-              <BookOpen className="h-12 w-12 mx-auto text-muted-foreground opacity-50" />
-              <div className="space-y-2">
-                <h4 className="text-xl font-semibold">No Quiz for Today</h4>
-                <p className="text-muted-foreground font-light">
+            <Card className="p-6 sm:p-8 text-center space-y-3 sm:space-y-4 bg-muted/20 border-dashed">
+              <BookOpen className="h-10 w-10 sm:h-12 sm:w-12 mx-auto text-muted-foreground opacity-50" />
+              <div className="space-y-1 sm:space-y-2">
+                <h4 className="text-lg sm:text-xl font-semibold">No Quiz for Today</h4>
+                <p className="text-sm sm:text-base text-muted-foreground font-light">
                   Catch up on previous quizzes or practice your knowledge
                 </p>
               </div>
               <Link to="/student-quiz">
-                <Button variant="gradient">
+                <Button variant="gradient" className="touch-manipulation min-h-[44px]">
                   Go to Quizzes
                 </Button>
               </Link>
@@ -350,25 +353,26 @@ export default function StudentDashboard() {
           </section>
         )}
 
-        {/* Timetable Section */}
+        {/* Timetable Section - Mobile First: Horizontal scroll on small screens */}
         {timetable && (
-          <section className="space-y-4">
-            <h3 className="text-2xl font-bold">Time Table</h3>
+          <section className="space-y-3 sm:space-y-4">
+            <h3 className="text-xl sm:text-2xl font-bold">Time Table</h3>
 
-            <Card className="p-6 overflow-x-auto">
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse min-w-full text-sm">
+            <Card className="p-3 sm:p-4 md:p-6 overflow-x-auto">
+              <div className="overflow-x-auto -mx-3 sm:mx-0">
+                <table className="w-full border-collapse min-w-[640px] text-xs sm:text-sm">
                   <thead>
                     <tr className="bg-muted/50">
-                      <th className="border border-border px-3 py-2 text-left font-semibold">
+                      <th className="border border-border px-2 sm:px-3 py-1.5 sm:py-2 text-left font-semibold sticky left-0 bg-muted/50 z-10">
                         Period
                       </th>
                       {DAYS.map((day) => (
                         <th
                           key={day}
-                          className="border border-border px-3 py-2 text-left font-semibold"
+                          className="border border-border px-2 sm:px-3 py-1.5 sm:py-2 text-left font-semibold"
                         >
-                          {day}
+                          <span className="hidden sm:inline">{day}</span>
+                          <span className="sm:hidden">{day.substring(0, 3)}</span>
                         </th>
                       ))}
                     </tr>
@@ -376,19 +380,20 @@ export default function StudentDashboard() {
                   <tbody>
                     {PERIODS.map((period, periodIndex) => (
                       <tr key={period} className="hover:bg-muted/30">
-                        <td className="border border-border px-3 py-2 font-medium bg-muted/20">
-                          {period}
+                        <td className="border border-border px-2 sm:px-3 py-1.5 sm:py-2 font-medium bg-muted/20 sticky left-0 z-10">
+                          <span className="hidden sm:inline">{period}</span>
+                          <span className="sm:hidden">P{periodIndex + 1}</span>
                         </td>
                         {DAYS.map((day) => {
                           const slot = timetable[day]?.[periodIndex];
                           return (
                             <td
                               key={`${day}-${periodIndex}`}
-                              className="border border-border px-3 py-2"
+                              className="border border-border px-2 sm:px-3 py-1.5 sm:py-2"
                             >
-                              <div className="space-y-1">
-                                <p className="font-medium text-sm">{slot?.subject || "-"}</p>
-                                <p className="text-xs text-muted-foreground">
+                              <div className="space-y-0.5 sm:space-y-1">
+                                <p className="font-medium text-xs sm:text-sm">{slot?.subject || "-"}</p>
+                                <p className="text-[10px] sm:text-xs text-muted-foreground truncate max-w-[80px] sm:max-w-none">
                                   {slot?.teacher || ""}
                                 </p>
                               </div>
@@ -413,9 +418,9 @@ export default function StudentDashboard() {
         </section>
       </div>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-background border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-around h-20">
+      {/* Bottom Navigation - Mobile First: Touch-optimized */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-background border-t border-border shadow-lg z-50">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 flex items-center justify-around h-16 sm:h-20">
           <NavItem icon={Home} label="Home" to="/student-dashboard" active />
           <NavItem icon={BookOpen} label="Courses" to="/courses" />
           <NavItem icon={BarChart3} label="Progress" to="/progress" />
@@ -424,7 +429,7 @@ export default function StudentDashboard() {
       </nav>
 
       {/* Padding for fixed nav */}
-      <div className="h-20" />
+      <div className="h-16 sm:h-20" />
     </div>
   );
 }
@@ -440,13 +445,13 @@ function NavItem({ icon: Icon, label, to, active = false }: NavItemProps) {
   return (
     <Link
       to={to}
-      className={`flex flex-col items-center gap-1 px-4 py-2 text-xs font-light transition-colors ${active
+      className={`flex flex-col items-center gap-0.5 sm:gap-1 px-2 sm:px-4 py-2 text-[10px] sm:text-xs font-light transition-colors touch-manipulation min-w-[60px] sm:min-w-0 ${active
         ? "text-primary"
-        : "text-muted-foreground hover:text-foreground"
+        : "text-muted-foreground hover:text-foreground active:text-primary"
         }`}
     >
-      <Icon className="h-6 w-6" />
-      <span>{label}</span>
+      <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+      <span className="truncate max-w-full">{label}</span>
     </Link>
   );
 }
