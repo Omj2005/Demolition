@@ -23,6 +23,7 @@ dist
 dist-ssr
 build
 out
+.vite
 
 # Firebase
 .firebase/
@@ -41,6 +42,8 @@ firebase-debug.log
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+.eslintcache
+*.tsbuildinfo
 
 # Testing
 coverage
@@ -48,4 +51,16 @@ coverage
 
 # Temp files
 *.tmp
+
+# Netlify
+netlify/.functions/node_modules
+netlify/.cache/
+
+# OS and IDE
+.cache/
+.parcel-cache/
+.turbo/
+.yarn/cache
+.yarn/install-state.gz
+pnpm-workspace.yaml.lock
 *.temp
